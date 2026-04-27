@@ -72,7 +72,7 @@ spring:
       write-dates-as-timestamps: false
 
 server:
-  port: 8080
+  port: 9090
   address: 0.0.0.0
 
 aws:
