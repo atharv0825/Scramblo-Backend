@@ -346,11 +346,16 @@ public class ArticleService {
         boolean liked = false;
         boolean bookmarked = false;
 
-        Long redisViews = (Long) redisTemplate.opsForValue()
+        Object redisViewsObj = redisTemplate.opsForValue()
                 .get("article:view:" + article.getId());
 
-        long totalViews = article.getViewCount() +
-                (redisViews != null ? redisViews : 0);
+        long redisViews = 0;
+
+        if (redisViewsObj instanceof Number) {
+            redisViews = ((Number) redisViewsObj).longValue();
+        }
+
+        long totalViews = article.getViewCount() + redisViews;
 
         try {
             currentUser = securityUtils.getCurrentUser();

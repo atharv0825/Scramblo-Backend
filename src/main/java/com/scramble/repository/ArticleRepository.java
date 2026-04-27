@@ -88,12 +88,12 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
 
     @Query("""
-        SELECT a FROM Article a
-        WHERE a.status = 'PUBLISHED'
-        AND a.createdAt >= :time
-        ORDER BY (a.viewCount + a.clapCount * 2 + a.commentCount * 3) DESC
-        """)
-    Page<Article> findTrendingByTime(LocalDateTime time, Pageable pageable);
+    SELECT a FROM Article a
+    WHERE a.status = 'PUBLISHED'
+    AND a.createdAt >= :time
+    ORDER BY a.viewCount DESC, a.clapCount DESC, a.commentCount DESC
+""")
+    Page<Article> findTrendingByTime(@Param("time") LocalDateTime time, Pageable pageable);
 
 
 
