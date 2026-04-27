@@ -26,7 +26,7 @@ public class ClientConfig {
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
 
                 // Redirect URL
-                .redirectUri("http://localhost:8080/login/oauth2/code/google")
+                .redirectUri("http://13.127.204.191:8081/login/oauth2/code/google")
 
                 // Scopes
                 .scope("read")
