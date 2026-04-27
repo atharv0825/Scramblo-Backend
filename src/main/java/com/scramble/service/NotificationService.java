@@ -66,9 +66,16 @@ public class NotificationService {
 
         return repository.findByUserId(user.getId())
                 .orElseGet(() -> {
+
                     NotificationPreference pref = NotificationPreference.builder()
                             .userId(user.getId())
-                            .build(); // defaults applied
+                            .newPost(true)
+                            .comments(true)
+                            .likes(true)
+                            .summaryReady(true)
+                            .emailEnabled(false)
+                            .build();
+
                     return repository.save(pref);
                 });
     }
