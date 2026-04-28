@@ -93,7 +93,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     AND a.createdAt >= :time
     ORDER BY a.viewCount DESC, a.clapCount DESC, a.commentCount DESC
 """)
-    Page<Article> findTrendingByTime(@Param("time") LocalDateTime time, Pageable pageable);
+    Page<Article> findTrendingByTime(@Param("time") LocalDateTime time, Pageable pageable); 
 
 
 

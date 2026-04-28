@@ -19,7 +19,9 @@ public class CorsConfig {
         config.setAllowCredentials(true);
 
         config.setAllowedOriginPatterns(List.of(
-                "http://localhost:5173"
+                "http://localhost:5173",
+                "https://scramblo.xyz",
+                "https://www.scramblo.xyz"
         ));
 
         config.setAllowedMethods(List.of("*"));
