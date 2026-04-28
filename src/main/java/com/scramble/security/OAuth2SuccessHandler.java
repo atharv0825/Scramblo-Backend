@@ -65,12 +65,14 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         response.addCookie(cookie);
 
+        String frontendUrl = "https://www.scramblo.xyz";
+
         String redirectUrl;
 
         if (isNewUser || !user.isProfileCompleted()) {
-            redirectUrl = "http://localhost:5173/oauth/callback?token=" + token + "&newUser=true";
+            redirectUrl = frontendUrl + "/oauth/callback?token=" + token + "&newUser=true";
         } else {
-            redirectUrl = "http://localhost:5173/oauth/callback?token=" + token + "&newUser=false";
+            redirectUrl = frontendUrl + "/oauth/callback?token=" + token + "&newUser=false";
         }
 
         response.sendRedirect(redirectUrl);
