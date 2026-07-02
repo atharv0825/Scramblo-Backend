@@ -2,11 +2,13 @@ package com.scramble.service;
 
 import com.scramble.dto.Notification.NotificationEvent;
 import com.scramble.dto.User.UserResponse;
+import com.scramble.dto.article.ArticlePublishedEvent;
 import com.scramble.dto.article.ArticleResponse;
 import com.scramble.dto.article.CreateArticleRequest;
 import com.scramble.dto.article.PageResponse;
 import com.scramble.entity.*;
 import com.scramble.kafka.ArticleEventProducer;
+import com.scramble.kafka.ArticlePublishedProducer;
 import com.scramble.kafka.NotificationProducer;
 import com.scramble.repository.*;
 import com.scramble.security.SecurityUtils;
@@ -43,6 +45,8 @@ public class ArticleService {
     private final ClapRepository clapRepository;
     private final BookmarkRepository bookmarkRepository;
     private final S3Service s3Service;
+    private final ArticlePublishedProducer articlePublishedProducer;
+
 
     public String getCacheKey(String type, int page, int size) {
         Long userId = securityUtils.getCurrentUser().getId();
@@ -88,6 +92,17 @@ public class ArticleService {
                 .build();
 
         Article savedArticle = articleRepository.save(article);
+
+        ArticlePublishedEvent articlePublishedEvent =
+                ArticlePublishedEvent.builder()
+                            .articleId(savedArticle.getId())
+                            .title(savedArticle.getTitle())
+                            .content(savedArticle.getContent())
+                            .authorId(user.getId())
+                        .build();
+
+        articlePublishedProducer.publish(articlePublishedEvent);
+
         articleEventProducer.sendSummary(savedArticle.getId());
 
         List<Follow> followers = followRepository
