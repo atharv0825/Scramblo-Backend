@@ -84,3 +84,33 @@ aws:
 gemini:
   api-key: ${GEMINI_API_KEY}
   url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  endpoint:
+    health:
+      show-details: always
+
+  info:
+    env:
+      enabled: true
+
+  metrics:
+    tags:
+      application: scramblo
+
+  health:
+    redis:
+      enabled: true
+    db:
+      enabled: true
+
+info:
+  app:
+    name: Scramblo
+    version: 1.0.0
+    description: Social Media Platform Backend
