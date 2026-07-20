@@ -42,7 +42,8 @@ public class SecurityConfig {
                                 "/login/**",
                                 "/api/users/default-images",
                                 "/api/articles/trending",
-                                "/api/articles/recent"
+                                "/api/articles/recent",
+                                "/actuator/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
